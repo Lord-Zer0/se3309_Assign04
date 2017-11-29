@@ -1,0 +1,1 @@
+// Javascript file for Weather Server
