@@ -6,18 +6,63 @@ $(document).ready(function() {
 	loadStuff();
 });
 
+function register() {
+	var _name  = $('#regName').val();
+	var _email = $('#regEmail').val();
+	var _pass  = $('#regPassword').val();
+	var user = {
+		name: _name,
+		email: _email,
+		password: _pass
+	};
+	$.ajax({
+		url: '/se3309_Assign04/src/server/register.php', // your php file
+		type: 'POST', // type of the HTTP request
+		data: user,
+		dataType: "json",
+		success: function(data){
+			console.log(data);
+		},
+		error: function(err) {
+			console.log('error', err);
+		}
+	});
+}
+
+function login() {
+	var _email = $('#loginEmail').val();
+	var _pass  = $('#loginPassword').val();
+	var user = {
+		email: _email,
+		password: _pass
+	};
+	$.ajax({
+		url: '/se3309_Assign04/src/server/login.php', // your php file
+		type: 'POST', // type of the HTTP request
+		data: user,
+		dataType: "json",
+		success: function(data){
+			console.log(data);
+		},
+		error: function(err) {
+			console.log('error', err);
+		}
+	});
+	// $(window).location('index.html');
+}
+
 function loadStuff() {
 	console.log('loading stuff');
 	$.ajax({
-	   url : '/se3309_Assign04/src/server/test.php', // your php file
-	   type : 'GET', // type of the HTTP request
-	   success : function(data){
-	      var obj = jQuery.parseJSON(data);
-	      // console.log(obj);
-	      $.each(obj, function(){
-	      	$('#weathers').append('<li>High: ' + this.high + ' Low: ' + this.low + '</li>');
-	      })
-	   }
+		url: '/se3309_Assign04/src/server/test.php', // your php file
+		type: 'GET', // type of the HTTP request
+		success: function(data){
+			var obj = jQuery.parseJSON(data);
+			// console.log(obj);
+			$.each(obj, function(){
+				$('#weathers').append('<li>High: ' + this.high + ' Low: ' + this.low + '</li>');
+			});
+		}
 	});
 }
 
