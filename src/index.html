@@ -13,16 +13,35 @@
 <body class="bg-dark text-white">
 	<div id="nav"></div>
 
-	<div class="container-fluid p-0">
-		<div class="jumbotron jumbotron-fluid text-dark">
-			<div class="container">
-				<h1 class="display-3">Weatherbase</h1>
-				<p class="lead">All your weather information</p>
-				<a href="login.html" class="btn btn-primary">Login</a>
-				<a href="register.html" class="btn btn-outline-primary">Sign up</a>
+	<div class="unauthed" style="display: none;">
+		<div class="container-fluid p-0">
+			<div class="jumbotron jumbotron-fluid text-dark">
+				<div class="container">
+					<h1 class="display-3">Weatherbase</h1>
+					<p class="lead">All your weather information</p>
+					<a href="login.html" class="btn btn-primary">Login</a>
+					<a href="register.html" class="btn btn-outline-primary">Sign up</a>
+				</div>
 			</div>
 		</div>
 	</div>
+
+	<div class="authed" style="display: none;">
+		<div class="container mt-5 text-center display-4">
+			<div class="row p-4">
+				<div class="col mr-2 ml-2 p-5 border border-primary rounded">Option 1</div>
+				<div class="col mr-2 ml-2 p-5 border border-success rounded">Option 2</div>
+				<div class="col mr-2 ml-2 p-5 border border-light rounded">Option 3</div>
+			</div>
+			<div class="row p-4">
+				<div class="col mr-2 ml-2 p-5 border border-warning rounded">Option 4</div>
+				<div class="col mr-2 ml-2 p-5 border border-info rounded">Option 5</div>
+				<div class="col mr-2 ml-2 p-5 border border-danger rounded" onclick="logout()" style="cursor: pointer;">Logout</div>
+			</div>
+		</div>
+	</div>
+
+
 
 	<div class="">
 		<ul id="weathers"></ul>

@@ -12,5 +12,7 @@
 
 	$q = $db->query("INSERT INTO users VALUES ('$email', '$pass', '$name')");
 
-	echo json_encode("{ message: 'user registered' }");
+	$return_array = array('message' => 'registered', 'email' => $email);
+
+	echo json_encode($return_array);
 ?>

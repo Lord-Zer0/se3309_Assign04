@@ -1,10 +1,38 @@
 // Javascript file for Weather Server
 
+var PATH = 'http://localhost/se3309_Assign04/src/';
+var LOGGED_IN;
+
 $(document).ready(function() {
 	console.log('ready');
 	setNavBar();
+	checkLogin();
+	showContent();
+	// just an example
 	loadStuff();
 });
+
+function checkLogin() {
+	if(localStorage.getItem('currentUser')) {
+		LOGGED_IN = true;
+		console.log('logged in');
+	}
+	else {
+		LOGGED_IN = false;
+	}
+}
+
+// shows authed or unauthed content
+function showContent() {
+	if(!LOGGED_IN) {
+		$('.unauthed').css('display', 'block');
+		$('.authed').css('display', 'none');
+	}
+	else {
+		$('.authed').css('display', 'block');
+		$('.unauthed').css('display', 'none');
+	}
+}
 
 function register() {
 	var _name  = $('#regName').val();
@@ -22,6 +50,14 @@ function register() {
 		dataType: "json",
 		success: function(data){
 			console.log(data);
+			if(data.message == "registered") {
+				console.log(data.message)
+				localStorage.setItem('currentUser', data.email);
+				window.location.href = PATH + "/index.html";
+			}
+			else {
+				console.log(data.message);
+			}
 		},
 		error: function(err) {
 			console.log('error', err);
@@ -43,6 +79,14 @@ function login() {
 		dataType: "json",
 		success: function(data){
 			console.log(data);
+			if(data.message == "authenticated") {
+				console.log(data.message)
+				localStorage.setItem('currentUser', data.email);
+				window.location.href = PATH + "/index.html";
+			}
+			else {
+				console.log(data.message);
+			}
 		},
 		error: function(err) {
 			console.log('error', err);
@@ -51,8 +95,12 @@ function login() {
 	// $(window).location('index.html');
 }
 
+function logout() {
+	localStorage.removeItem('currentUser');
+	window.location.href = PATH + "/index.html";
+}
+
 function loadStuff() {
-	console.log('loading stuff');
 	$.ajax({
 		url: '/se3309_Assign04/src/server/test.php', // your php file
 		type: 'GET', // type of the HTTP request
@@ -76,13 +124,13 @@ function setNavBar() {
 		'<div class="collapse navbar-collapse" id="navbarNav">'+
 			'<ul class="navbar-nav">'+
 				'<li class="nav-item">'+
-					'<a class="nav-link" href="index.html">Home</a>'+
+					'<a class="nav-link" href="./index.html">Home</a>'+
 				'</li>'+
 				'<li class="nav-item">'+
-					'<a class="nav-link" href="login.html">Login</a>'+
+					'<a class="nav-link" href="./login.html">Login</a>'+
 				'</li>'+
 				'<li class="nav-item">'+
-					'<a class="nav-link" href="register.html">Register</a>'+
+					'<a class="nav-link" href="./register.html">Register</a>'+
 				'</li>'+
 			'</ul>'+
 		'</div>'+

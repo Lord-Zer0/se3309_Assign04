@@ -12,10 +12,12 @@
 	$q = $db->query("SELECT * FROM users WHERE email='$email' AND password='$pass' LIMIT 1");
 
 	if($row = mysqli_fetch_assoc($q)) {
-		echo json_encode("{ message: 'User authenticated' }");
+		$return_array = array('message' => 'authenticated', 'email' => $email);
+		echo json_encode($return_array);
 	}
 	else {
-		echo json_encode("{ message: 'Incorrect login information' }");
+		$return_array = array('message' => 'Incorrect login information');
+		echo json_encode($return_array);
 	}
 
 ?>
