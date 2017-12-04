@@ -120,6 +120,8 @@ function searchLocations(argument) {
 		data: query,
 		dataType: "json",
 		success: function(data){
+			$('#locExists').css('display', 'none');
+			$('#locAdded').css('display', 'none');
 			if(data.length > 0) {
 				$('#noresults').css('display', 'none');
 				$('#searchResults').html('');
@@ -151,8 +153,15 @@ function addLoc(_id) {
 		type: 'POST', // type of the HTTP request
 		data: loc,
 		dataType: "json",
-		success: function(data){
-			$('#locAdded').css('display', 'block');
+		success: function(data) {
+			if(data.message == 'exists') {
+				$('#locExists').css('display', 'block');
+				$('#locAdded').css('display', 'none');	
+			}
+			else {
+				$('#locAdded').css('display', 'block');	
+				$('#locExists').css('display', 'none');
+			}			
 			console.log(data);
 		},
 		error: function(err) {
