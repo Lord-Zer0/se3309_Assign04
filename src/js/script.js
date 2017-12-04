@@ -4,10 +4,10 @@ var PATH = 'http://localhost/se3309_Assign04/src/';
 var LOGGED_IN;
 
 $(document).ready(function() {
-	console.log('ready');
-	setNavBar();
 	checkLogin();
+	setNavBar();
 	showContent();
+	console.log('ready');
 	// just an example
 	loadStuff();
 });
@@ -100,6 +100,67 @@ function logout() {
 	window.location.href = PATH + "/index.html";
 }
 
+function searchLocations(argument) {
+	// console.log('Searching locations for', $('#searchQuery').val());
+	var _q = $('#searchQuery').val();
+	if(_q == '' || _q == ' ') {
+		$('#noresults').css('display', 'none');
+		$('#searchResults').html('');
+		return 0;
+	}
+	var query = {
+		term: _q
+	};
+	var row = '<div class="row my-2 py-3 rounded bg-secondary">'
+	var col = '<div class="col-sm-3 text-center">';
+	var end = '</div>';
+	$.ajax({
+		url: '/se3309_Assign04/src/server/searchlocations.php', // your php file
+		type: 'POST', // type of the HTTP request
+		data: query,
+		dataType: "json",
+		success: function(data){
+			if(data.length > 0) {
+				$('#noresults').css('display', 'none');
+				$('#searchResults').html('');
+				$.each(data, function(){
+					var but = '<button class="btn btn-primary" onclick="addLoc('+this.loc_id+')">Add</button>';
+					$('#searchResults')
+					.append(row + col + this.city + end + col + this.province + end + col + this.country + end + col + but + end + end);
+				});
+			}
+			else {
+				$('#noresults').css('display', 'block');
+				$('#searchResults').html('');
+			}
+		},
+		error: function(err) {
+			console.log('error', err);
+		}
+	});
+}
+
+function addLoc(_id) {
+	var _email = localStorage.getItem('currentUser');
+	var loc = {
+		id: _id,
+		email: _email
+	};
+	$.ajax({
+		url: '/se3309_Assign04/src/server/addlocation.php', // your php file
+		type: 'POST', // type of the HTTP request
+		data: loc,
+		dataType: "json",
+		success: function(data){
+			$('#locAdded').css('display', 'block');
+			console.log(data);
+		},
+		error: function(err) {
+			console.log('error', err);
+		}
+	});
+}
+
 function loadStuff() {
 	$.ajax({
 		url: '/se3309_Assign04/src/server/test.php', // your php file
@@ -126,10 +187,10 @@ function setNavBar() {
 				'<li class="nav-item">'+
 					'<a class="nav-link" href="./index.html">Home</a>'+
 				'</li>'+
-				'<li class="nav-item">'+
+				'<li class="nav-item unauthed">'+
 					'<a class="nav-link" href="./login.html">Login</a>'+
 				'</li>'+
-				'<li class="nav-item">'+
+				'<li class="nav-item unauthed">'+
 					'<a class="nav-link" href="./register.html">Register</a>'+
 				'</li>'+
 			'</ul>'+
