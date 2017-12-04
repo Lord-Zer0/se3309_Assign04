@@ -9,6 +9,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 	<script src="./js/script.js"></script>
+	<link rel="stylesheet" href="./css/custom.css">
 </head>
 <body class="bg-dark text-white">
 	<div id="nav"></div>
@@ -29,18 +30,17 @@
 	<div class="authed" style="display: none;">
 		<div class="container mt-5 text-center display-4">
 			<div class="row p-4">
-				<div class="col mr-2 ml-2 p-5 border border-primary rounded">Option 1</div>
-				<div class="col mr-2 ml-2 p-5 border border-success rounded">Option 2</div>
-				<div class="col mr-2 ml-2 p-5 border border-light rounded">Option 3</div>
+				<div class="col"><button class="btn btn-outline-primary option">Option 1</button></div>
+				<div class="col"><button class="btn btn-outline-success option">Option 2</button></div>
+				<div class="col"><button class="btn btn-outline-warning option">Option 3</button></div>
 			</div>
 			<div class="row p-4">
-				<div class="col mr-2 ml-2 p-5 border border-warning rounded">Option 4</div>
-				<div class="col mr-2 ml-2 p-5 border border-info rounded">Option 5</div>
-				<div class="col mr-2 ml-2 p-5 border border-danger rounded" onclick="logout()" style="cursor: pointer;">Logout</div>
+				<div class="col"><button class="btn btn-outline-info option">Option 4</button></div>
+				<div class="col"><button class="btn btn-outline-light option">Option 5</button></div>
+				<div class="col"><button class="btn btn-outline-danger option" onclick="logout()">Logout</button></div>
 			</div>
 		</div>
 	</div>
-
 
 
 	<div class="">
