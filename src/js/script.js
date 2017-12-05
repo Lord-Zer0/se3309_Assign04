@@ -100,7 +100,7 @@ function logout() {
 	window.location.href = PATH + "/index.html";
 }
 
-function searchLocations(argument) {
+function searchLocations(option) {
 	// console.log('Searching locations for', $('#searchQuery').val());
 	var _q = $('#searchQuery').val();
 	if(_q == '' || _q == ' ') {
@@ -126,7 +126,12 @@ function searchLocations(argument) {
 				$('#noresults').css('display', 'none');
 				$('#searchResults').html('');
 				$.each(data, function(){
-					var but = '<button class="btn btn-primary" onclick="addLoc('+this.loc_id+')">Add</button>';
+					if(option == 'a') {
+						var but = '<button class="btn btn-primary" onclick="addLoc('+this.loc_id+')">Add</button>';
+					}
+					else if(option == 'r') {
+						var but = '<button type="button" class="btn btn-primary" onclick="selectLoc('+this.loc_id+',\''+this.city+'\')">Select</button>';
+					}
 					$('#searchResults')
 					.append(row + col + this.city + end + col + this.province + end + col + this.country + end + col + but + end + end);
 				});
@@ -168,6 +173,49 @@ function addLoc(_id) {
 			console.log('error', err);
 		}
 	});
+}
+
+var REPORT_CITY_ID = -1;
+
+function selectLoc(_id, city) {
+	REPORT_CITY_ID = _id;
+	$('#searchQuery').val(city);
+	$('#searchResults').html('');
+}
+
+function submitReport() {
+	var _email = localStorage.getItem('currentUser');
+	var _temp = $('#reportTemp').val();
+	var yes = $('#reportYes').prop('checked');
+	var no = $('#reportNo').prop('checked');
+	var _yORn = yes ? 'y' : 'n';
+	var _comments =  $('#reportComments').val();
+	console.log(_temp, REPORT_CITY_ID, _comments, _yORn, _email);
+	if(REPORT_CITY_ID == -1) {
+		$('#noReportLoc').css('display', 'block');
+	}
+	else {
+		var report = {
+			temp: _temp,
+			prec: _yORn,
+			comments: _comments,
+			locationID: REPORT_CITY_ID,
+			email: _email
+		};
+		console.log(report);
+		$.ajax({
+			url: '/se3309_Assign04/src/server/submitreport.php', // your php file
+			type: 'POST', // type of the HTTP request
+			data: report,
+			dataType: "json",
+			success: function(data) {
+				console.log(data);
+			},
+			error: function(err) {
+				console.log('error', err);
+			}
+		});
+	}
 }
 
 function loadStuff() {

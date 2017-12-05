@@ -7,7 +7,7 @@
 	$res = array();
 	$city = $_POST['term'];
 
-	$q = $db->query("SELECT * FROM locations WHERE city='$city'");
+	$q = $db->query("SELECT * FROM locations WHERE city LIKE '$city%' GROUP BY province");
 
 	$i = 0;
 
