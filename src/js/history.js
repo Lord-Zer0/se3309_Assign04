@@ -78,6 +78,7 @@ function getHistory() {
     var row = '<div class="row my-2 py-3 rounded bg-secondary">'
     var col = '<div class="col-sm-2 text-center">';
     var end = '</div>';
+    var lg_col = '<div class="col-sm-6 text-center">'
     $.ajax({
         url: '/se3309_Assign04/src/server/history.php', // your php file
         type: 'POST', // type of the HTTP request
@@ -88,6 +89,7 @@ function getHistory() {
             if (data.length > 0) {
                 $('#noresults').css('display', 'none');
                 $('#searchResults').html('');
+                $('#searchResults').append(row + lg_col + "<b>Average High:</b> " + data[0].havg + end + lg_col + "<b>Average Low:</b> " + data[0].lavg + end + end);
                 $.each(data, function () {
                     var date = col + this.date + end;
                     var loc = col + this.country + ", " + this.province + ", " + this.city + end;

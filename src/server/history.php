@@ -39,19 +39,31 @@
             ."WHERE date < NOW() AND date > '$from' AND country LIKE '$country' AND province LIKE '$province' AND city LIKE '$city'";
 
             $q = $db->query($s);
+
+            $a = "SELECT AVG(high) AS havg, AVG(low) AS lavg FROM weather "
+                ."JOIN locations USING (locationID) "
+                ."WHERE date < NOW() AND date > '$from' AND country LIKE '%' AND province LIKE '%' AND city LIKE '%'";
+
+            $avg = $db->query($a);
+
         } else {
             $s = "SELECT country, province, city, locationID, weatherID, high, low, precipitationAmt, precipitationType, date FROM weather "
             ."JOIN locations USING (locationID) "
             ."WHERE date < NOW() AND country LIKE '$country' AND province LIKE '$province' AND city LIKE '$city'";
 
             $q = $db->query($s);
+
+            $a = "SELECT AVG(high) AS havg, AVG(low) AS lavg FROM weather "
+                ."JOIN locations USING (locationID) "
+                ."WHERE date < NOW() AND date > '$from' AND country LIKE '%' AND province LIKE '%' AND city LIKE '%'";
+
+            $avg = $db->query($a);
         }
 
-        // if ($q == null) {
-        //     $res = array('message' => 'failed');
-        //     echo json_encode($res);
-        //     return false;
-        // }
+        while($row = mysqli_fetch_assoc($avg)) {
+            $havg = $row['havg'];
+            $lavg = $row['lavg'];
+        }
 
         $i = 0;
     
@@ -64,7 +76,9 @@
                             'low'      => $row['low'],
                             'precAmt'  => $row['precipitationAmt'],
                             'precType' => $row['precipitationType'],
-                            'date'     => $row['date']
+                            'date'     => $row['date'],
+                            'havg'     => $havg,
+                            'lavg'     => $lavg
                             );
             $i++;
         }
