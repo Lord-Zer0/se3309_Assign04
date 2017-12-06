@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Weatherbase | Forecasts</title>
+    <meta charset="UTF-8">
+    <title>Weatherbase | History</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
@@ -10,7 +11,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
     <script src="./js/script.js"></script>
     <link rel="stylesheet" href="./css/custom.css">
-    <script src="./js/forecasts.js"></script>
+    <script src="./js/history.js"></script>
 </head>
 
 <body class="bg-dark text-white">
@@ -26,19 +27,31 @@
     <h1 class="display-1">7 Day Forecasts</h1>
     <p class="lead"></p>
 
-    <form onsubmit="getForecast(); return false;">
+    <form onsubmit="getHistory(); return false;">
         <div class="row">
             <div class="col">
-                <label for="forecastCountry">Country</label>
-                <select id="forecastCountry" onchange="setCountry(); return false;"></select>
+                <label for="selectCountry">Country</label>
+                <select id="selectCountry" onchange="setCountry(); return false;"></select>
             </div>
             <div class="col">
-                <label for="forecastProv">Province</label>
-                <select id="forecastProv" onchange="setProv(); return false;"></select>
+                <label for="selectProv">Province</label>
+                <select id="selectProv" onchange="setProv(); return false;"></select>
             </div>
             <div class="col">
-                <label for="forecastCity">City</label>
-                <select id="forecastCity" onchange="setCity(); return false;"></select>
+                <label for="selectCity">City</label>
+                <select id="selectCity" onchange="setCity(); return false;"></select>
+            </div>
+
+            <div class="col">
+                <label for="selectRange">Search Range</label>
+                <select id="selectRange">
+                    <option value="%">All Records</option>
+                    <option value="prevWeek">Last Week</option>
+                    <option value="prevMonth">Last Month</option>
+                    <option value="snow">Snow</option>
+                    <option value="thunder">Thunder</option>
+                    <option value="rain">Rain</option>
+                </select>
             </div>
 
             <div class="col py-4">
