@@ -8,8 +8,6 @@ $(document).ready(function() {
 	setNavBar();
 	showContent();
 	console.log('ready');
-	// just an example
-	loadStuff();
 });
 
 function checkLogin() {
@@ -216,20 +214,6 @@ function submitReport() {
 			}
 		});
 	}
-}
-
-function loadStuff() {
-	$.ajax({
-		url: '/se3309_Assign04/src/server/test.php', // your php file
-		type: 'GET', // type of the HTTP request
-		success: function(data){
-			var obj = jQuery.parseJSON(data);
-			// console.log(obj);
-			$.each(obj, function(){
-				$('#weathers').append('<li>High: ' + this.high + ' Low: ' + this.low + '</li>');
-			});
-		}
-	});
 }
 
 function setNavBar() {

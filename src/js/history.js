@@ -1,6 +1,7 @@
 var COUNTRY = '%';
 var PROVINCE = '%';
 var CITY = '%';
+var RANGE = '%';
 
 $(document).ready(function () {
     getOptions();
@@ -47,34 +48,35 @@ function getOptions(argument) {
 
 function setCountry() {
     COUNTRY = $('#selectCountry').val();
-    console.log(COUNTRY, ' - ', PROVINCE, ' - ', CITY);
+    console.log(COUNTRY, ' - ', PROVINCE, ' - ', CITY, ' - ', RANGE);
     if(COUNTRY != '%') getOptions();
 }
 
 function setProv() {
     PROVINCE = $('#selectProv').val();
-    console.log(COUNTRY, ' - ', PROVINCE, ' - ', CITY);
+    console.log(COUNTRY, ' - ', PROVINCE, ' - ', CITY, ' - ', RANGE);
     if(PROVINCE != '%') getOptions();
 }
 
 function setCity() {
     CITY = $('#selectCity').val();
-    console.log(COUNTRY, ' - ', PROVINCE, ' - ', CITY);
+    console.log(COUNTRY, ' - ', PROVINCE, ' - ', CITY, ' - ', RANGE);
 }
 
 function getHistory() {
     COUNTRY = $('#selectCountry').val();
     PROVINCE = $('#selectProv').val();
     CITY = $('#selectCity').val();
-    var RANGE = $('#selectRange').val();
+    RANGE = $('#selectRange').val();
     console.log(COUNTRY, ' - ', PROVINCE, ' - ', CITY, ' - ', RANGE);
     var search = {
         country: COUNTRY,
         province: PROVINCE,
+        city: CITY,
         range: RANGE
     }
     var row = '<div class="row my-2 py-3 rounded bg-secondary">'
-    var col = '<div class="col-sm-3 text-center">';
+    var col = '<div class="col-sm-2 text-center">';
     var end = '</div>';
     $.ajax({
         url: '/se3309_Assign04/src/server/history.php', // your php file
@@ -87,10 +89,15 @@ function getHistory() {
                 $('#noresults').css('display', 'none');
                 $('#searchResults').html('');
                 $.each(data, function () {
-                    var but = '<button class="btn btn-primary" onclick="addLoc(' + this.loc_id + ')">Add</button>';
+                    var date = col + this.date + end;
+                    var loc = col + this.country + ", " + this.province + ", " + this.city + end;
+                    var high = col + "<b>High:</b> " + this.high + end;
+                    var low = col + "<b>Low:</b> " + this.low + end;
+                    var precipT = col + "<b>Precipitation:</b> " + this.precType + end;
+                    var precipA = col + "<b>Precipitation:</b> " + this.precAmt + "mm" + end;
                     $('#searchResults')
-                        .append(row + col + this.city + end + col + this.province + end + col + this.country + end + col + but + end + end);
-                });
+                        .append(row + date + loc + high + low + precipT + precipA + end);
+                    });
             }
             else {
                 $('#noresults').css('display', 'block');

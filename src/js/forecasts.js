@@ -71,9 +71,10 @@ function getForecast() {
         country: COUNTRY,
         province: PROVINCE,
         city: CITY,
+        type: 't'
     }
     var row = '<div class="row my-2 py-3 rounded bg-secondary">'
-    var col = '<div class="col-sm-3 text-center">';
+    var col = '<div class="col-sm-3 p-2 text-center">';
     var end = '</div>';
     $.ajax({
         url: '/se3309_Assign04/src/server/forecasts.php', // your php file
@@ -86,10 +87,17 @@ function getForecast() {
                 $('#noresults').css('display', 'none');
                 $('#searchResults').html('');
                 $.each(data, function(){
-                    var but = '<button class="btn btn-primary" onclick="addLoc('+this.loc_id+')">Add</button>';
+                    var date = col + this.date + end;
+                    var loc = col + this.country + ", " + this.province + ", " + this.city + end;
+                    var high = col + "<b>High:</b> " + this.high + end;
+                    var low = col + "<b>Low:</b> " + this.low + end;
+                    var chance = col + "<b>Chance:</b> " + this.chance + "%" + end;
+                    var precipT = col + "<b>Precipitation:</b> " + this.precType + end;
+                    var precipA = col + "<b>Precipitation:</b> " + this.precAmt + "mm" + end;
+                    var humid = col + "<b>Humidity:</b> " + this.humidity + "%" + end;
                     $('#searchResults')
-                        .append(row + col + this.city + end + col + this.province + end + col + this.country + end + col + but + end + end);
-                });
+                        .append(row + date + loc + chance + high + low + precipT + precipA + humid + end);
+                    });
             }
             else {
                 $('#noresults').css('display', 'block');

@@ -14,10 +14,10 @@
     $end_date = date("Y-m-d H:i:s", strtotime("+1 week"));
     
     if ($type != 'filter') {
-        $s = "SELECT country, province, city, locationID, high, low, precipitationAmt, precipitationType, chance FROM forecasts "
+        $s = "SELECT country, province, city, locationID, high, low, precipitationAmt, precipitationType, chance, humidity, DATE(date) AS date FROM forecasts "
         ."JOIN locations USING (locationID) "
-        ."WHERE country LIKE '$country' AND province LIKE '$province' AND city LIKE '$city'"
-        ."WHERE date > $date AND date < $end_date";
+        ."WHERE country LIKE '$country' AND province LIKE '$province' AND city LIKE '$city' "
+        ."AND date > NOW() AND date < NOW() + INTERVAL 1 WEEK";
 
         $q = $db->query($s);
 
@@ -32,7 +32,9 @@
                             'low'      => $row['low'],
                             'precAmt'  => $row['precipitationAmt'],
                             'precType' => $row['precipitationType'],
-                            'chance'   => $row['chance']
+                            'chance'   => $row['chance'],
+                            'date'     => $row['date'],
+                            'humidity' => $row['humidity']
                             );
             $i++;
         }

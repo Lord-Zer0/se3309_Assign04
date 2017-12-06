@@ -17,15 +17,15 @@
                 $from = date("Y-m-d H:i:s", strtotime("-1 day"));            
                 break;
             case 'week':
-                $from = date("Y-m-d H:i:s", strtotime("-1 day"));
+                $from = date("Y-m-d H:i:s", strtotime("-1 week"));
                 break;
             
             case 'month':
-                $from = date("Y-m-d H:i:s", strtotime("-1 day"));
+                $from = date("Y-m-d H:i:s", strtotime("-1 month"));
                 break;
 
             case 'year':
-                $from = date("Y-m-d H:i:s", strtotime("-1 day"));
+                $from = date("Y-m-d H:i:s", strtotime("-1 year"));
                 break;
         
             default:
@@ -34,35 +34,37 @@
         }
 
         if ($from != '%') {
-            $s = "SELECT country, province, city, locationID, weatherID, high, low, precipitationAmt, precipitationType, stormID, type, date FROM weather "
+            $s = "SELECT country, province, city, locationID, weatherID, high, low, precipitationAmt, precipitationType, date FROM weather "
             ."JOIN locations USING (locationID) "
-            ."WHERE date < $date AND date > $from ";
+            ."WHERE date < NOW() AND date > '$from' AND country LIKE '$country' AND province LIKE '$province' AND city LIKE '$city'";
 
             $q = $db->query($s);
         } else {
-            $s = "SELECT country, province, city, locationID, weatherID, high, low, precipitationAmt, precipitationType, stormID, type, date FROM weather "
+            $s = "SELECT country, province, city, locationID, weatherID, high, low, precipitationAmt, precipitationType, date FROM weather "
             ."JOIN locations USING (locationID) "
-            ."WHERE date < $date ";
+            ."WHERE date < NOW() AND country LIKE '$country' AND province LIKE '$province' AND city LIKE '$city'";
 
             $q = $db->query($s);
         }
 
-        if ($q == null) {
-            return false;
-        }
+        // if ($q == null) {
+        //     $res = array('message' => 'failed');
+        //     echo json_encode($res);
+        //     return false;
+        // }
 
         $i = 0;
     
         while ($row = mysqli_fetch_assoc($q)) {
             $res[$i] = array(
-                             'country'  => $row['country'],
+                            'country'  => $row['country'],
                             'province' => $row['province'],
                             'city'     => $row['city'],
-                            'type'     => $row['type'],
                             'high'     => $row['high'],
                             'low'      => $row['low'],
                             'precAmt'  => $row['precipitationAmt'],
-                            'precType' => $row['precipitationType']
+                            'precType' => $row['precipitationType'],
+                            'date'     => $row['date']
                             );
             $i++;
         }
