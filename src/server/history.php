@@ -9,9 +9,10 @@
     $country  = $_POST['country'];
 	$province = $_POST['province'];
     $city     = $_POST['city'];
+    $type     = $_POST['type'];
     $range    = $_POST['range'];
 
-    if ($range != 'filter') {
+    if ($type != 'filter') {
         switch ($range) {
             case 'day':
                 $from = date("Y-m-d H:i:s", strtotime("-1 day"));            
