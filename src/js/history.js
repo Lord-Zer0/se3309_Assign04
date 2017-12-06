@@ -2,7 +2,6 @@ var COUNTRY = '%';
 var PROVINCE = '%';
 var CITY = '%';
 
-
 $(document).ready(function () {
     getOptions();
 });
@@ -11,7 +10,8 @@ function getOptions(argument) {
     var search = {
         country: COUNTRY,
         province: PROVINCE,
-        type: 'filter'
+        city: CITY,
+        range: 'filter'
     }
     $.ajax({
         url: '/se3309_Assign04/src/server/history.php', // your php file
